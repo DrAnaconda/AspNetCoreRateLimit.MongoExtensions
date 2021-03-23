@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreRateLimit.MongoExtensions
 {
-    public class RateLimitConfigurationMongo : RateLimitConfiguration, IDisposable
+    public class RateLimitConfigurationMongo : RateLimitConfiguration
     {
-        private bool isDisposed = false;
         private readonly MongoClient mongoClient;
 
         private readonly string TargetDatabase;
@@ -68,20 +67,6 @@ namespace AspNetCoreRateLimit.MongoExtensions
         private void LoadDataSync()
         {
             LoadDataAsync().Wait();
-        }
-
-        public virtual void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-        }
-        public virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed && disposing)
-            {
-                repeatableScanner?.Dispose();
-            }
-            isDisposed = true;
         }
     }
 }
